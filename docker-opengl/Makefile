@@ -2,7 +2,7 @@
 ORG = nullworks
 
 # Name of image
-IMAGE = opengl
+IMAGE = cathook-docker-opengl
 
 # Docker TAG
 TAG = latest

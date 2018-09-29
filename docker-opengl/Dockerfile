@@ -20,7 +20,10 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
   xinit \
   xserver-xorg-video-dummy \
   xserver-xorg-input-void \
-  websockify
+  websockify \
+  nano \
+  steam \
+  npm
   
 RUN rm -f /usr/share/applications/x11vnc.desktop && \
   apt-get remove -y python-pip && \

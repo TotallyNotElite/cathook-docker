@@ -1,6 +1,6 @@
 #!/bin/bash
-container=cathook-docker-opengl
-image=nullworks/cathook-docker-opengl
+container=cathook-docker-catbots #todo: use random name
+image=nullworks/cathook-docker-catbots
 port=6080
 extra_run_args=""
 extra_docker_args=""
