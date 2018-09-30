@@ -1,7 +1,4 @@
 FROM nullworks/cathook-docker-opengl
-#TODO: Move to opengl
-RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install steam nano nodejs
-RUN apt-get -y install rsync npm
 
 WORKDIR /home/user
 USER 1000

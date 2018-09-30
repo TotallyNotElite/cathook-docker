@@ -44,7 +44,7 @@ RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
 
 RUN git clone https://github.com/kanaka/noVNC.git /opt/noVNC && \
   cd /opt/noVNC && \
-  ln -s vnc_auto.html index.html
+  ln -s vnc.html index.html
 
   #  git checkout 6a90803feb124791960e3962e328aa3cfb729aeb && \
   
