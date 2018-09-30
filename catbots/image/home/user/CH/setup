@@ -1,0 +1,52 @@
+#!/bin/bash
+if [ $EUID == 0 ]; then
+	echo "This script must not be run as root"
+	exit
+fi
+
+echo Permissions...
+pushd /home/user/CH
+sudo chown user /home/user/CH
+sudo chown -Rv user $(ls | awk '{if($1 != "cathook"){ print $1 }}')
+popd
+echo Done...
+
+sudo groupadd `cat kisak`s
+sudo usermod -a -G `cat kisak`s user
+
+sudo mkdir -p "/opt/cathook/bin"
+sudo rm "/opt/cathook/bin/libcathook-textmode.so"
+
+mkdir -p build
+pushd build
+
+echo Builidng...
+numcpu=$(grep -c ^processor /proc/cpuinfo)
+cathook="/home/user/CH/cathook/"
+
+cmake -DCMAKE_BUILD_TYPE=Release -DEnableVisuals=0 -DVACBypass=1 -DTextmode=1 -DEnableWarnings=0 -DEnableOnlineFeatures=0 "$cathook"
+make -j$numcpu
+sudo make data
+
+popd
+echo Done. cathook-ipc-server, account-generator and cathook-ipc-web-panel
+
+git clone https://github.com/nullworks/account-generator --recursive
+
+pushd account-generator
+./install.sh
+popd
+
+git clone https://github.com/nullworks/cathook-ipc-server --recursive
+
+numcpu=$(grep -c ^processor /proc/cpuinfo)
+
+pushd cathook-ipc-server
+./install.sh
+popd
+
+git clone https://github.com/nullworks/cathook-ipc-web-panel --recursive
+
+pushd cathook-ipc-web-panel
+./install.sh
+popd

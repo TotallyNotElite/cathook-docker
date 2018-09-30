@@ -1,0 +1,43 @@
+#!/bin/bash 
+cd "${0%/*}"
+if [ $EUID == 0 ]; then
+	echo "This script must not be run as root"
+	exit
+fi
+sleep 20
+
+sudo chown -h $USER:`cat kisak`s "/opt/steamapps"
+sudo chown -R $USER:`cat kisak`s "/opt/steamapps"
+sudo chmod -R g+rwx "/opt/steamapps"
+sudo chmod +x "/opt"
+sudo chmod +x "/opt/steamapps"
+#sudo chown -R $USER:`cat kisak`s "/opt/steamapps/common/Team Fortress 2/cathook"
+pushd $(realpath /opt/steamapps) ; while [ $(pwd) != "/" ]; do echo $(pwd); sudo chmod +x .; cd ..; done; popd
+
+max=$botcount
+
+for i in $(seq 1 $max)
+do
+	if [ -d "/home/`cat kisak`-$i" ]; then
+		echo "`cat kisak`-$i already exists"
+		continue
+	fi
+	echo "Creating user `cat kisak`-$i"
+	sudo useradd -m `cat kisak`-$i
+	sudo usermod -g `cat kisak`s `cat kisak`-$i
+	sudo mkdir -p /home/`cat kisak`-$i
+	sudo chown `cat kisak`-$i:`cat kisak`s /home/`cat kisak`-$i
+	sudo -H -u `cat kisak`-$i bash -c "mkdir -p /home/`cat kisak`-$i/.local/share/Steam"
+	sudo -H -u `cat kisak`-$i bash -c "ln -s \"/opt/steamapps\" \"/home/`cat kisak`-$i/.local/share/Steam/steamapps\""
+	sudo -H -u `cat kisak`-$i bash -c "mkdir -p ~/.steam"
+	sudo -H -u `cat kisak`-$i bash -c "touch ~/.steam/steam_install_agreement.txt"
+done
+
+# Required for steam to start as other users
+xhost + >/dev/null
+
+for i in $(seq 1 $max)
+do
+	echo "Starting Steam for `cat kisak` $i"
+	sudo su - `cat kisak`-$i -c "steam &>/tmp/steam-`cat kisak`-$i.log 2>&1 &"
+done

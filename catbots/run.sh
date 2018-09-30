@@ -3,7 +3,7 @@ container=cathook-docker-catbots #todo: use random name
 image=nullworks/cathook-docker-catbots
 port=6080
 extra_run_args=""
-extra_docker_args=""
+extra_docker_args="-v /home/$USER/.steam/steam/steamapps/:/opt/steamapps -p 8080:8080 -p 8081:8081 --cap-add=SYS_PTRACE --security-opt seccomp:unconfined"
 quiet=""
 use_vm=""
 
