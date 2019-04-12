@@ -22,7 +22,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
   xserver-xorg-input-void \
   websockify \
   nano \
-  steam \
   npm
   
 RUN rm -f /usr/share/applications/x11vnc.desktop && \
