@@ -29,7 +29,7 @@ RUN rm -f /usr/share/applications/x11vnc.desktop && \
   wget https://bootstrap.pypa.io/get-pip.py && \
   python get-pip.py && \
   pip install supervisor-stdout && \
-  apt-get -y clean && apt-get autoremove
+  apt-get -y clean && apt-get autoremove -y
 
 COPY etc/skel/.xinitrc /etc/skel/.xinitrc
 
