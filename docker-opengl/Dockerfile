@@ -1,4 +1,4 @@
-FROM nullworks/cathook-docker-ci
+FROM ubuntu
 #FROM dockcross/base:latest
 #MAINTAINER Matt McCormick <matt.mccormick@kitware.com>
 
